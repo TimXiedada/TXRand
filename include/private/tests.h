@@ -1,0 +1,11 @@
+#pragma once
+//#include "TXRand.h"
+void choice_test(void);
+void randbool_b_test(void);
+void fillbuffer_test(void);
+//void randint_test(void);
+void random_test(void);
+void randbool_test(void);
+void randint_randbelow_test(void);
+void sample_test(void);
+void shuffle_test(void);
