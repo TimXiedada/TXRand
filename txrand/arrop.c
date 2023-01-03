@@ -3,7 +3,7 @@
 
 
 
-static inline void*  mboffset(const void* pstart, size_t offsetb, size_t bs) {
+static inline void* PRIVATEAPI mboffset(const void* pstart, size_t offsetb, size_t bs) {
     size_t _pdest;
     void* pdest;
     _pdest = (size_t)pstart;
@@ -12,7 +12,7 @@ static inline void*  mboffset(const void* pstart, size_t offsetb, size_t bs) {
     return pdest;
 }
 
-static size_t* __fastcall uniq_rand_arr(size_t len, size_t range, size_t* arr) {
+static size_t* PRIVATEAPI uniq_rand_arr(size_t len, size_t range, size_t* arr) {
     if (!arr) return NULL;
     size_t i, b, i2;
     for (i = 0; i < len; i++) {
@@ -50,7 +50,7 @@ static size_t* __fastcall uniq_rand_arr(size_t len, size_t range, size_t* arr) {
 }
 
 
-inline static size_t memswp(void* a, void* b, size_t size) {
+inline static size_t PRIVATEAPI memswp(void* a, void* b, size_t size) {
     {
         size_t cmpa, cmpb;
         cmpa = (size_t)a, cmpb = (size_t)b;
