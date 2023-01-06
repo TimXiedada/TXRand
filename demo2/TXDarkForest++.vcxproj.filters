@@ -15,12 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="txrandApi.c">
+    <ClCompile Include="TXDarkForest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Civilization.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\private\txrandApi.h">
+    <ClInclude Include="civilization.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="enums.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ptdef.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

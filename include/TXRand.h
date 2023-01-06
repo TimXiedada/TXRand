@@ -8,9 +8,10 @@ extern "C" {
 #define COMING_SOON
 #ifndef TXRANDAPI 
 #define TXRANDAPI __cdecl
-
-#endif
-
+#endif // TXRANDAPI
+#ifndef PRIVATEAPI
+#define PRIVATEAPI __fastcall
+#endif // PRIVATEAPI
 	//typedef void*  pvoid;
 
 	_Bool __cdecl TXGetRand(void* buffer, size_t size);
