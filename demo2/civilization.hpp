@@ -38,7 +38,7 @@ private:
     const bool     _isPositive; //是否活跃
           double   _mark;           //分数
     bool           _interactedFlag = false;
-    
+    Civilization* pos;
 public:
     //构造函数
     Civilization();
@@ -54,7 +54,7 @@ public:
     double          Mark       (void) const { return _mark; };
     
     
-    friend  IRESULT Fight      (Civilization& cv1, Civilization& cv2);
+    friend  IRESULT Fight      (Civilization& cv1, Civilization& cv2,bool attack);
     friend  IRESULT Cooperation(Civilization& cv1, Civilization& cv2);
     /*
     friend  void    SetUniverse(const Civilization* const cvArr,const std::vector<CVInteractRecord>* const cvIRecord,const size_t * const round,const size_t * const i)

@@ -38,7 +38,7 @@ bool ExitCond(const UniStatInfo si)
 
 int main()
 {
-    UniverseMain(5000);
+    UniverseMain(50000);
 }
 
 
@@ -48,7 +48,7 @@ void UniverseMain(const size_t cvCount)
     using std::string;
     char fmtBuf[128];
     const char* header = "round,nAlive,nAggresive,nNeutral,nFriendly,nTotal,maxMark,champion";
-    const char* fmt = "%u,%u,%u,%u,%u,%u,%g,%p";
+    const char* fmt = "%u,%u,%u,%u,%u,%u,%g,%llu";
     Civilization** const cvpArray = new Civilization*[cvCount];
     for (size_t i = 0;i < cvCount;i++)cvpArray[i] = new Civilization;
     Civilization* pCurrentCV;
@@ -58,7 +58,17 @@ void UniverseMain(const size_t cvCount)
     size_t round=0, i=0;
     std::vector<CVInteractRecord> interactRecord;
     //SetUniverse(cvArray,&interactRecord,&round,&i);
-    shuffle(cvpArray,sizeof(Civilization*),cvCount);
+    //shuffle(cvpArray,sizeof(Civilization*),cvCount);
+    //for (i = 0; i < cvCount; i++) {
+    //    std::printf(
+    //        "%llu,%d,%s,%g\n",
+    //        cvpArray[i],
+    //        cvpArray[i]->Type(),
+    //        cvpArray[i]->IsPositive()?"true":"false",
+    //        cvpArray[i]->Mark()
+    //        );
+
+    //}
     statInfo = AnalyzeUniverse(cvpArray, cvpInteractStack, cvCount);
     std::sprintf(
         fmtBuf,fmt,
@@ -79,6 +89,7 @@ void UniverseMain(const size_t cvCount)
         
         while (! cvpInteractStack.empty()) 
         {
+            i = 1;
             Civilization* pInteractCV = cvpInteractStack.top();
             if (!pInteractCV->Alive()) {
                 cvpInteractStack.pop(); 
@@ -112,12 +123,20 @@ void UniverseMain(const size_t cvCount)
         );
         std::cout << fmtBuf ;
         shuffle(cvpArray, sizeof(Civilization*), cvCount);
-        round++, i = 0;
+        round++;
     } while (! ExitCond(statInfo));
     std::cout.put('\n');
+    std::printf((string("-")*40).c_str());
+    std::cout.put('\n');
+    /*
     for (const auto & e : interactRecord) {
-        std::printf("%u,%u,%p,%p,%d\n",e.round,e.i,e.cv1,e.cv2,e.ir);
+        std::printf("%llu,%llu,%llu,%llu,%d\n",e.round,e.i,e.cv1,e.cv2,(int)e.ir);
     }
+    */
+    for (i = 0; i < cvCount; i++) {
+        delete cvpArray[i];
+    }
+    delete[] cvpArray;
 }
 
 UniStatInfo AnalyzeUniverse(
