@@ -20,10 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="arrop.c" />
-    <ClCompile Include="fillbuffer.c" />
     <ClCompile Include="randint.c" />
     <ClCompile Include="randbool.c" />
-    <ClCompile Include="randbool_b.c" />
     <ClCompile Include="random.c" />
   </ItemGroup>
   <ItemGroup>

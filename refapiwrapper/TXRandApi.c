@@ -1,4 +1,9 @@
-﻿
+﻿/*  SPDX-License-Identifier: CC0-1.0  */
+/*
+    A wrapper of Windows API to TXRand random source. 
+    Add this into your project if you would like to use TXRand on Windows XP or later version.
+    Made by the author of TXRand. Licensed with CC0.
+*/
 #ifdef _WIN32
 #include <windows.h>
 #ifdef __cplusplus

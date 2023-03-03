@@ -1,3 +1,13 @@
+/*  SPDX-License-Identifier: ISC  */
+/*
+    Copyright 2021-2023 Xie Youtian
+
+    Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+    THE SOFTWARE IS PROVIDED ¡°AS IS¡± AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*/
+
+
 #include "txrand.h"
 #include <string.h>
 
@@ -12,7 +22,11 @@ static inline void* PRIVATEAPI mboffset(const void* pstart, size_t offsetb, size
     return pdest;
 }
 
-static size_t* PRIVATEAPI uniq_rand_arr(size_t len,size_t range,size_t* arr) {
+int uniq_rand_arr_version_flag = 0;
+const int default_uniq_rand_arr_version_flag = 3;
+
+
+static size_t* PRIVATEAPI uniq_rand_arr_v2(const size_t len, const size_t range, size_t* const arr) {
     if (!arr) return NULL;
     typedef struct _node {
         size_t n;
@@ -33,7 +47,7 @@ static size_t* PRIVATEAPI uniq_rand_arr(size_t len,size_t range,size_t* arr) {
     current->next = NULL;
     for (i = 0; i < len; i++) {
         current = head;
-        k = randbelow(range-i);
+        k = randbelowull(range-i);
         if (!k) {
             head = current->next; // ÆþÍ·
             arr[i] = current->n;
@@ -55,16 +69,25 @@ static size_t* PRIVATEAPI uniq_rand_arr(size_t len,size_t range,size_t* arr) {
     }
     End:return arr;
 }
-/*
+
 struct pair { size_t n, w; };
-int paircmp(void * a,void * b) {
+int paircmp(const void * a,const void * b) {
     return ((struct pair*)a)->w < ((struct pair*)b)->w ? 1 : ((struct pair*)a)->w >((struct pair*)b)->w ? -1 : 0;
 }
-static size_t* PRIVATEAPI uniq_rand_arr_v3(size_t len, size_t range, size_t* arr) {
-    
+static size_t* PRIVATEAPI uniq_rand_arr_v3(const size_t len, const size_t range, size_t* const arr) {
+    if (!range || !len || !arr)return NULL;;
+    struct pair* pa = (struct pair*)malloc(sizeof (struct pair)* range);
+    if (!pa)return NULL;
+    size_t i;
+    if (!TXGetRand(pa, sizeof(struct pair) * range)) { free(pa); return NULL; };
+    for (i = 0; i < range; i++)pa[i].n = i;
+    qsort(pa,range, sizeof(struct pair),paircmp);
+    for (i = 0; i < range; i++)arr[i] = pa[i].n;
+    free(pa);
+    return arr;
 }
-*/
-static size_t* PRIVATEAPI uniq_rand_arr_v1(size_t len, size_t range, size_t* arr) {
+
+static size_t* PRIVATEAPI uniq_rand_arr_v1(const size_t len, const size_t range, size_t* const arr) {
     if (!arr) return NULL;
     size_t i, b, i2;
     for (i = 0; i < len; i++) {
@@ -79,6 +102,21 @@ static size_t* PRIVATEAPI uniq_rand_arr_v1(size_t len, size_t range, size_t* arr
     }
     return arr;
 }
+
+static size_t* PRIVATEAPI uniq_rand_arr(const size_t len, const size_t range, size_t* const arr) {
+    start:switch (uniq_rand_arr_version_flag) {
+    case 1:
+        return uniq_rand_arr_v1(len, range, arr);
+    case 2:
+        return uniq_rand_arr_v2(len, range, arr);
+    case 3:
+        return uniq_rand_arr_v3(len, range, arr);
+    default:
+        uniq_rand_arr_version_flag = default_uniq_rand_arr_version_flag;
+        goto start;
+    }
+}
+
  void*  TXRANDAPI choice(const void* seq, size_t size, size_t count)
 {
     size_t b;
@@ -131,6 +169,7 @@ void shuffle(void* seq, size_t size, size_t count) {
     for (i = 0; i < count; i++) {
         memswp(mboffset(seq, i, size), mboffset(seq, sa[i], size), size);
     }
+    /*
     if (!uniq_rand_arr(count, count, sa)) {
         free(sa);
         return;
@@ -138,13 +177,20 @@ void shuffle(void* seq, size_t size, size_t count) {
     for (i = 0; i < count; i++) {
         memswp(mboffset(seq, sa[i], size), mboffset(seq, i, size), size);
     }
+    */
     free(sa);
     return;
 }
 
-/*
-static _Bool InsertInArray(size_t srcIndex, size_t dstIndex,
-                          size_t bs, void* array) {
+
+void* TXRANDAPI fillbuffer(void* buffer, size_t size, unsigned count)
+{
+    _Bool succ = TXGetRand(buffer, size * count);
+    if (!succ) return NULL;
+    else return buffer;
+}
+
+static _Bool insert_in_array(size_t srcIndex, size_t dstIndex, size_t bs, void* array) {
     if (srcIndex == dstIndex)return 1;
     void* buffer;
     size_t deltaIndex;
@@ -163,4 +209,4 @@ static _Bool InsertInArray(size_t srcIndex, size_t dstIndex,
     free(buffer);
     return 1;
 }
-*/
+

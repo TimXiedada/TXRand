@@ -18,16 +18,10 @@
     <ClCompile Include="arrop.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="fillbuffer.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="randint.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="randbool.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="randbool_b.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="random.c">

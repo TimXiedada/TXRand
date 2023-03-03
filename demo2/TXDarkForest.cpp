@@ -1,5 +1,18 @@
 ﻿// TXDarkForest++.cpp 
-//
+
+/*  SPDX-License-Identifier: GPL-3.0-or-later  */
+
+/*
+    TXDarkForest++ is a re-implentation of a "Dark Forest" simulator made by BrackRat () ,testing TXRand in data-intensive conditions.
+    Copyright (C) 2022-2023 Xie Youtian
+
+    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <cassert>
 #include <stack>
@@ -38,7 +51,12 @@ bool ExitCond(const UniStatInfo si)
 
 int main()
 {
-    UniverseMain(50000);
+    size_t CvCount;
+    std::cout << "CvCount:";
+    std::cin >> CvCount;
+    std::cout.put('\n');
+    
+    UniverseMain(CvCount);
 }
 
 
