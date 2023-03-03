@@ -1,4 +1,4 @@
-#include "private/tests.h"
+#include "tests.h"
 #include <stdio.h>
 #include <string.h>
 #define ST_OUTSIZE 20

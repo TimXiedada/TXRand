@@ -1,4 +1,4 @@
-#include "private/tests.h"
+#include "tests.h"
 #include <assert.h>
 void randint_randbelow_test(void) {
     const unsigned TIMES = 500000000;

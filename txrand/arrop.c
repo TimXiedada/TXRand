@@ -55,7 +55,15 @@ static size_t* PRIVATEAPI uniq_rand_arr(size_t len,size_t range,size_t* arr) {
     }
     End:return arr;
 }
-
+/*
+struct pair { size_t n, w; };
+int paircmp(void * a,void * b) {
+    return ((struct pair*)a)->w < ((struct pair*)b)->w ? 1 : ((struct pair*)a)->w >((struct pair*)b)->w ? -1 : 0;
+}
+static size_t* PRIVATEAPI uniq_rand_arr_v3(size_t len, size_t range, size_t* arr) {
+    
+}
+*/
 static size_t* PRIVATEAPI uniq_rand_arr_v1(size_t len, size_t range, size_t* arr) {
     if (!arr) return NULL;
     size_t i, b, i2;

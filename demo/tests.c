@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "txrand.h"
-#include "private/tests.h"
+#include "tests.h"
 #include <assert.h>
 void randbool_b_test(void)
 {

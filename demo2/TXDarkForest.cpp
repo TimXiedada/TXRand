@@ -7,7 +7,7 @@
 #include "Civilization.hpp"
 #include "Enums.hpp"
 #include <string>
-#include <txrand.h>
+#include "txrand.h"
 
 
 

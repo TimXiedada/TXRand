@@ -1,6 +1,11 @@
-﻿#include "private/TXRandApi.h"
+﻿
 #ifdef _WIN32
 #include <windows.h>
+#ifdef __cplusplus
+extern "C" bool __cdecl TXGetRand(void* buffer, size_t size);
+#else
+_Bool __cdecl TXGetRand(void* buffer, size_t size);
+#endif
 
 static HCRYPTPROV* phRandHandle = NULL;
 
