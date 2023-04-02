@@ -5,7 +5,7 @@ void randint_randbelow_test(void) {
     unsigned i; 
     {
         void*  s = malloc(1);
-        srand(s);
+        srand((unsigned)s);
         free(s); 
     }
     int max4rbt = rand();

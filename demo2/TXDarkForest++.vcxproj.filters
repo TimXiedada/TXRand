@@ -24,6 +24,9 @@
     <ClCompile Include="Utilities.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="util_csv.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="civilization.hpp">
@@ -33,6 +36,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ptdef.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="util_csv.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

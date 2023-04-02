@@ -13,13 +13,13 @@ extern "C" {
 #define PRIVATEAPI __fastcall
 #endif // PRIVATEAPI
 	//typedef void*  pvoid;
-
-	_Bool __cdecl TXGetRand(void* buffer, size_t size);
+	// Wrapper to OS random number generator.
+	_Bool __cdecl call_os_rng(void* buffer, size_t size);
 	/*--------------------楚--------------------河--------------------汉--------------------界--------------------*/
-	//misc
-	_Bool TXRANDAPI randbool(const double weight); // ok tested
-	_Bool TXRANDAPI randbool_b(void); // ok tested
-
+	//randbool.c
+	_Bool TXRANDAPI randbool(const double weight);
+	_Bool TXRANDAPI randbool_b(void); 
+	_Bool TXRANDAPI randbool_q(void);
 	/*--------------------楚--------------------河--------------------汉--------------------界--------------------*/
 	//randint.c
 	int TXRANDAPI randbelow(const int n);

@@ -11,7 +11,29 @@
 #include "txrand.h"
 #include <string.h>
 
+/*
 
+
+    这段代码实现了一些随机数生成和数组操作相关的函数。具体分析如下：
+
+    uniq_rand_arr 函数：该函数生成一个包含 len 个元素的数组，每个元素的值在 0 到 range-1 之间，且每个元素的值都不相同。该函数使用了 calloc 函数进行内存分配，并返回分配的数组指针。
+
+    mboffset 函数：该函数实现了一个指针偏移函数，将指针 pstart 往后偏移 offsetbbs 个字节，并返回偏移后的指针。该函数使用了 size_t 类型的变量进行指针运算，并将其转换为 void 类型的指针返回。
+
+    choice 函数：该函数从 seq 数组中随机选择一个元素，并返回该元素的指针。函数首先调用了 call_os_rng 函数生成一个随机数 b，然后将其对 count 取模，得到一个在 0 到 count-1 之间的随机数。最后使用 mboffset 函数计算出随机元素的指针并返回。
+
+    sample 函数：该函数从 pop 数组中随机选择 k 个元素，将它们复制到 dest 数组中，并返回 dest 数组的指针。为了避免重复选择元素，函数先调用 uniq_rand_arr 函数生成一个包含 k 个不同元素的数组 simarr，然后依次将 pop 数组中对应下标的元素复制到 dest 数组中。函数使用了 calloc 函数进行内存分配，并在函数执行完毕后释放 simarr 和 _simarr 数组的内存。
+
+    memswp 函数：该函数实现了一个指针交换函数，将指针 a 和指针 b 指向的大小为 size 的内存区域交换。函数首先检查指针 a 和指针 b 是否相同，或者它们指向的内存区域是否有重叠，如果有则直接返回。否则，函数使用异或运算逐个交换指针 a 和指针 b 指向的内存区域，并返回交换的次数。
+
+    shuffle 函数：该函数实现了一个数组洗牌函数，将数组 seq 中的元素随机打乱顺序。函数首先调用 uniq_rand_arr 函数生成一个包含 count 个不同元素的数组 sa，然后依次使用 memswp 函数交换数组 seq 中的元素和数组 sa 中对应下标的元素。函数使用了 calloc 函数进行内存分配，并在函数执行完毕后释放 sa 数组的内存。
+
+    fillbuffer 函数：该函数使用 call_os_rng 函数生成 count 个随机字节，并将它们填充到 buffer 指向的内存区域中。函数返回 buffer 指针，如果生成随机数失败则返回 NULL。
+
+
+*/
+
+size_t* PRIVATEAPI uniq_rand_arr(const size_t len, const size_t range, size_t* const arr);
 
 static inline void* PRIVATEAPI mboffset(const void* pstart, size_t offsetb, size_t bs) {
     size_t _pdest;
@@ -22,120 +44,23 @@ static inline void* PRIVATEAPI mboffset(const void* pstart, size_t offsetb, size
     return pdest;
 }
 
-int uniq_rand_arr_version_flag = 0;
-const int default_uniq_rand_arr_version_flag = 3;
-
-
-static size_t* PRIVATEAPI uniq_rand_arr_v2(const size_t len, const size_t range, size_t* const arr) {
-    if (!arr) return NULL;
-    typedef struct _node {
-        size_t n;
-        struct _node* next;
-    }node,*pnode;
-    pnode head, current, temp;
-    head = (pnode)malloc(sizeof (struct _node));
-    if (!head)return NULL;
-    current = head;
-    current->n = 0;
-    size_t i, j, k;
-    for (i = 1; i < range; i++) {
-        current->next = malloc(sizeof(struct _node));
-        if (!(current->next))return NULL;
-        current = current->next;
-        current->n = i;
-    }
-    current->next = NULL;
-    for (i = 0; i < len; i++) {
-        current = head;
-        k = randbelowull(range-i);
-        if (!k) {
-            head = current->next; // 掐头
-            arr[i] = current->n;
-            free(current); // 内存免费了
-            continue;
-        }
-        for (j = 0; j < k-1; j++)if (current)current = current->next; else return NULL;
-        arr[i]=current->next->n;
-        temp = current->next->next;
-        free(current->next);
-        current->next = temp;
-    }
-    current = head;
-    if (!current)goto End;
-    while (current->next) {
-        temp = current->next;
-        free(current);
-        current = temp;
-    }
-    End:return arr;
-}
-
-struct pair { size_t n, w; };
-int paircmp(const void * a,const void * b) {
-    return ((struct pair*)a)->w < ((struct pair*)b)->w ? 1 : ((struct pair*)a)->w >((struct pair*)b)->w ? -1 : 0;
-}
-static size_t* PRIVATEAPI uniq_rand_arr_v3(const size_t len, const size_t range, size_t* const arr) {
-    if (!range || !len || !arr)return NULL;;
-    struct pair* pa = (struct pair*)malloc(sizeof (struct pair)* range);
-    if (!pa)return NULL;
-    size_t i;
-    if (!TXGetRand(pa, sizeof(struct pair) * range)) { free(pa); return NULL; };
-    for (i = 0; i < range; i++)pa[i].n = i;
-    qsort(pa,range, sizeof(struct pair),paircmp);
-    for (i = 0; i < range; i++)arr[i] = pa[i].n;
-    free(pa);
-    return arr;
-}
-
-static size_t* PRIVATEAPI uniq_rand_arr_v1(const size_t len, const size_t range, size_t* const arr) {
-    if (!arr) return NULL;
-    size_t i, b, i2;
-    for (i = 0; i < len; i++) {
-        GetRandomUnsigned: {
-            if (!TXGetRand(&b, sizeof(b))) return NULL;
-            b %= range;
-        }
-        for (i2 = 0; i2 < i; i2++) {
-            if (arr[i2] == b) goto GetRandomUnsigned;
-        }
-        arr[i] = b;
-    }
-    return arr;
-}
-
-static size_t* PRIVATEAPI uniq_rand_arr(const size_t len, const size_t range, size_t* const arr) {
-    start:switch (uniq_rand_arr_version_flag) {
-    case 1:
-        return uniq_rand_arr_v1(len, range, arr);
-    case 2:
-        return uniq_rand_arr_v2(len, range, arr);
-    case 3:
-        return uniq_rand_arr_v3(len, range, arr);
-    default:
-        uniq_rand_arr_version_flag = default_uniq_rand_arr_version_flag;
-        goto start;
-    }
-}
-
- void*  TXRANDAPI choice(const void* seq, size_t size, size_t count)
+void*  TXRANDAPI choice(const void* seq, size_t size, size_t count)
 {
     size_t b;
-    {
-    if (!TXGetRand(&b, sizeof(b))) return NULL;
+    
+    if (!call_os_rng(&b, sizeof(b))) return NULL;
     b %= count;
-    }
+    
     return mboffset(seq,b,size);
 }
 
- void*  TXRANDAPI sample(const void* pop, size_t size, size_t count, size_t k, void* dest) {
+void*  TXRANDAPI sample(const void* pop, size_t size, size_t count, size_t k, void* dest) {
     size_t *_simarr,*simarr, i;
     _simarr = calloc(k,size);
     if (!_simarr) return NULL;
     simarr = uniq_rand_arr(k,count,_simarr);
     if (!simarr) { free(_simarr); return NULL; };
-    for (i = 0; i < k; i++) {
-        memcpy(mboffset(dest, i, size),mboffset(pop,simarr[i],size), size);
-    }
+    for (i = 0; i < k; i++) memcpy(mboffset(dest, i, size),mboffset(pop,simarr[i],size), size);   
     return dest;
 }
 
@@ -185,7 +110,7 @@ void shuffle(void* seq, size_t size, size_t count) {
 
 void* TXRANDAPI fillbuffer(void* buffer, size_t size, unsigned count)
 {
-    _Bool succ = TXGetRand(buffer, size * count);
+    _Bool succ = call_os_rng(buffer, size * count);
     if (!succ) return NULL;
     else return buffer;
 }

@@ -7,10 +7,27 @@
     THE SOFTWARE IS PROVIDED “AS IS” AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+/*
+    
+    
+    这段代码实现了三个函数：random、uniform和uniforml，分别用于生成不同类型的随机数。
+    其中，random函数生成double类型的随机数，randomf函数生成float类型的随机数，randoml函数生成long double类型的随机数。
+    这些函数的实现方式都是调用obtain_cached_ull函数获取随机数种子，然后通过一定的转换方式将随机数种子转换为相应的随机数。
+    
+    uniform和uniforml函数用于生成一定范围内的随机数，
+    在实现上先计算出范围内的差值delta，
+    然后通过调用random或randoml函数生成[0,1)范围内的随机数nd，
+    最后将delta与nd相乘得到最终的随机数。
+    需要注意的是，如果调用random或randoml函数时失败了，将返回nan或nanl表示获取随机数失败。
+    
+    
+*/
 
 #include "txrand.h"
 #include <limits.h>
 #include <math.h>
+
+_Bool PRIVATEAPI obtain_cached_ull(unsigned long long* const pull, const size_t sizeofull);
 
 double TXRANDAPI random(void)
 {
@@ -20,7 +37,7 @@ double TXRANDAPI random(void)
 
 
     do {
-        _Bool succ = TXGetRand(&pn, sizeof(pn));
+        _Bool succ = obtain_cached_ull(&pn, sizeof(pn));
         if (!succ) return nan("Failed to obtain random value!");
         dpn = (double)pn;
         if (dpn < 0.0L) {
@@ -44,7 +61,7 @@ float TXRANDAPI randomf(void)
 
 
     do {
-        _Bool succ = TXGetRand(&pn, sizeof(pn));
+        _Bool succ = obtain_cached_ull(&pn, sizeof(pn));
         if (!succ) return nanf("Failed to obtain random value!");
         fpn = (float)pn;
         if (fpn < 0.0F) {
@@ -68,7 +85,7 @@ long double TXRANDAPI randoml(void)
 
 
     do {
-        _Bool succ = TXGetRand(&pn, sizeof(pn));
+        _Bool succ = obtain_cached_ull(&pn, sizeof(pn));
         if (!succ) return nanl("Failed to obtain random value!");
         ldpn = (long double)pn;
         if (ldpn < 0.0L) {

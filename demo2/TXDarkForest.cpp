@@ -14,14 +14,17 @@
 */
 
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <cassert>
 #include <stack>
 #include <iostream>
+#include <sstream>
+#include <string>
+
 #include "Civilization.hpp"
 #include "Enums.hpp"
-#include <string>
 #include "txrand.h"
-
+#include "util_csv.hpp"
 
 
 inline std::string operator*(std::string str, size_t times) 
@@ -146,9 +149,17 @@ void UniverseMain(const size_t cvCount)
     std::cout.put('\n');
     std::printf((string("-")*40).c_str());
     std::cout.put('\n');
+    
+    
     /*
     for (const auto & e : interactRecord) {
-        std::printf("%llu,%llu,%llu,%llu,%d\n",e.round,e.i,e.cv1,e.cv2,(int)e.ir);
+        csv_line lnbuf;  
+        
+        lnbuf.push_back((std::ostringstream() << e.cv1).str());
+        lnbuf.push_back((std::ostringstream() << e.cv2).str());
+        
+       
+        
     }
     */
     for (i = 0; i < cvCount; i++) {

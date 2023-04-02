@@ -9,7 +9,7 @@ void randbool_b_test(void)
 	for (int i = 0; i < 25; i++)
 	{
 		if (randbool_b()) printf("true\t");
-		else printf("0\t");
+		else printf("false\t");
 		if (!((i + 1) % 5)) putchar('\n');
 	}
 	int trueCount = 0;

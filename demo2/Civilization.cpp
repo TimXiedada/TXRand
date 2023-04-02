@@ -19,29 +19,29 @@
 #include <cassert>
 
 Civilization::Civilization()
-	:_type((CV_TYPE)randbelow(3)),_isPositive(randbool_b()),_mark(uniform(8000.0,12000.0))
+	:_type((CV_TYPE)randbelow(3)),_isPositive(randbool_b()),_mark(uniform(8000.0,12000.0)),_serial(randbelowul(0))
 {
 	// 日志记录功能即将实现
-	pos = this;
+	//pos = this;
 }
 
-Civilization::Civilization(CV_TYPE civilizationType, bool isPositive, double initMark)
-	:_type(civilizationType),_isPositive(isPositive),_mark(initMark)
+Civilization::Civilization(CV_TYPE civilizationType, bool isPositive, double initMark,unsigned long serial)
+	:_type(civilizationType),_isPositive(isPositive),_mark(initMark), _serial(serial)
 {
 	// 日志记录功能即将实现
-	pos = this; 
+	//pos = this; 
 }
 
 Civilization::Civilization(double initMark)
-	:_type((CV_TYPE)randbelow(3)), _isPositive(randbool_b()), _mark(initMark)
+	:_type((CV_TYPE)randbelow(3)), _isPositive(randbool_b()), _mark(initMark), _serial(randbelowul(0))
 {
 	// 日志记录功能即将实现
-	pos = this;
+	//pos = this;
 }
 Civilization::~Civilization() 
 {
 	// 日志记录功能即将实现
-	assert(pos == this);
+	//assert(pos == this);
 }
 IRESULT Civilization::Interact(Civilization& cvt) 
 {

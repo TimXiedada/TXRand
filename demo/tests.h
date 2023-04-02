@@ -1,5 +1,5 @@
 #pragma once
-//#include "txrand.h"
+#include "txrand.h"
 void choice_test(void);
 void randbool_b_test(void);
 void fillbuffer_test(void);

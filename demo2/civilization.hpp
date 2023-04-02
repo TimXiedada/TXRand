@@ -15,6 +15,7 @@
 #define _CIVILIZATION_H_
 #include "enums.hpp"
 #include <vector>
+#include <txrand.h>
 
 class Civilization;
 typedef struct {
@@ -47,15 +48,16 @@ protected:
     static const size_t* _pround, *_pi;
     */
 private:
-    const CV_TYPE  _type;    //类型
-    const bool     _isPositive; //是否活跃
-          double   _mark;           //分数
-    bool           _interactedFlag = false;
-    Civilization* pos;
+    const CV_TYPE        _type;    //类型
+    const bool           _isPositive; //是否活跃
+    double               _mark;           //分数
+    bool                 _interactedFlag = false;
+    const unsigned long  _serial; //序列号
+    
 public:
     //构造函数
     Civilization();
-    Civilization(CV_TYPE civilizationType, bool isPositive, double initMark);
+    Civilization(CV_TYPE civilizationType, bool isPositive, double initMark, unsigned long serial = randbelowul(0));
     explicit Civilization(double initMark);
 
     //成员函数
@@ -65,7 +67,7 @@ public:
     bool            Alive      (void) const { return _mark > 0; };
     bool            Interacted (void) const { return _interactedFlag; };
     double          Mark       (void) const { return _mark; };
-    
+    unsigned long   Serial     (void) const { return _serial; };
     
     friend  IRESULT Fight      (Civilization& cv1, Civilization& cv2,bool attack);
     friend  IRESULT Cooperation(Civilization& cv1, Civilization& cv2);
