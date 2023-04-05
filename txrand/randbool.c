@@ -26,7 +26,7 @@
     这个函数还使用了静态变量来保存当前已经生成的随机数和还剩余的二进制位数，以便下次调用时继续使用。
 */
 
-
+_Bool PRIVATEAPI obtain_cached_ull(unsigned long long* const pull, const size_t sizeofull);
 _Bool TXRANDAPI  randbool(double weight) {
 	const double i = random();
 	_Bool returnvalue = (i < weight);

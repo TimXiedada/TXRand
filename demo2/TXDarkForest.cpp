@@ -69,7 +69,7 @@ void UniverseMain(const size_t cvCount)
     using std::string;
     char fmtBuf[128];
     const char* header = "round,nAlive,nAggresive,nNeutral,nFriendly,nTotal,maxMark,champion";
-    const char* fmt = "%u,%u,%u,%u,%u,%u,%g,%llu";
+    const char* fmt = "%u,%u,%u,%u,%u,%u,%g,%lu";
     Civilization** const cvpArray = new Civilization*[cvCount];
     for (size_t i = 0;i < cvCount;i++)cvpArray[i] = new Civilization;
     Civilization* pCurrentCV;
@@ -100,7 +100,7 @@ void UniverseMain(const size_t cvCount)
         statInfo.nFriendly,
         cvCount,
         statInfo.maxMark,
-        statInfo.champion
+        statInfo.champion->Serial()
     );
     std::cout << "Origin Uni:" << std::endl << header << std::endl << fmtBuf << std::endl << string("-") * 40;
     round = 1;
@@ -140,7 +140,7 @@ void UniverseMain(const size_t cvCount)
             statInfo.nFriendly,
             cvCount,
             statInfo.maxMark,
-            statInfo.champion
+            statInfo.champion->Serial()
         );
         std::cout << fmtBuf ;
         shuffle(cvpArray, sizeof(Civilization*), cvCount);
