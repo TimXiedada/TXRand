@@ -28,7 +28,6 @@
 int uniq_rand_arr_version_flag = 0;
 const int default_uniq_rand_arr_version_flag = 3;
 
-
 static size_t* PRIVATEAPI uniq_rand_arr_v2(const size_t len, const size_t range, size_t* const arr) {
     if (!arr||!range||!len) return NULL;
     typedef struct _node {
@@ -54,6 +53,7 @@ static size_t* PRIVATEAPI uniq_rand_arr_v2(const size_t len, const size_t range,
     for (i = 0; i < len; i++) {
         current = head;
         k = ka[i]%(range - i);
+
         if (!k) {
             head = current->next; // ÆþÍ·
             arr[i] = current->n;
@@ -77,7 +77,7 @@ static size_t* PRIVATEAPI uniq_rand_arr_v2(const size_t len, const size_t range,
 }
 
 struct pair { size_t n, w; };
-int paircmp(const void* a, const void* b) {
+static int PRIVATEAPI paircmp(const void* a, const void* b) {
     return ((struct pair*)a)->w < ((struct pair*)b)->w ? 1 : ((struct pair*)a)->w >((struct pair*)b)->w ? -1 : 0;
 }
 static size_t* PRIVATEAPI uniq_rand_arr_v3(const size_t len, const size_t range, size_t* const arr) {
