@@ -12,7 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{C5C2E9E6-4DB6-4795-AF36-4204E713FA63}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		readme.html = readme.html
+		readme.txt = readme.txt
+		_readme.html = _readme.html
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TXDarkForest++", "demo2\TXDarkForest++.vcxproj", "{5104E245-8ABE-4332-8715-0CADA192FD47}"
