@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="TXDarkForest" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="../Debug/bin32/TXDarkForest" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug/" />
+				<Option deps_output="../Debug/bin32/" />
+				<Option external_deps="../Debug/lib32/libtxrand.a;../Debug/lib32/libTXRandApi.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="$(VC_IncludePath)/" />
+					<Add directory="$(WindowsSDK_IncludePath)/" />
+					<Add directory="../include/" />
+				</Compiler>
+				<Linker>
+					<Add library="../Debug/lib32/libtxrand.a" />
+					<Add library="../Debug/lib32/libTXRandApi.a" />
+					<Add directory="$(VC_LibraryPath_x86)/" />
+					<Add directory="$(WindowsSDK_LibraryPath_x86)/" />
+					<Add directory="../Debug/lib32/" />
+					<Add directory="$(LibraryPath)/" />
+				</Linker>
+			</Target>
+			<Target title="Debug x64">
+				<Option output="../Debug/bin/TXDarkForest" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug/" />
+				<Option deps_output="../Debug/bin/" />
+				<Option external_deps="../Debug/lib/libtxrand.a;../Debug/lib/libTXRandApi.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="$(VC_IncludePath)/" />
+					<Add directory="$(WindowsSDK_IncludePath)/" />
+					<Add directory="../include/" />
+				</Compiler>
+				<Linker>
+					<Add library="../Debug/lib/libtxrand.a" />
+					<Add library="../Debug/lib/libTXRandApi.a" />
+					<Add directory="$(VC_LibraryPath_x64)/" />
+					<Add directory="$(WindowsSDK_LibraryPath_x64)/" />
+					<Add directory="../Debug/lib/" />
+					<Add directory="$(LibraryPath)/" />
+				</Linker>
+			</Target>
+			<Target title="Release x64">
+				<Option output="../Release/bin/TXDarkForest" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release/" />
+				<Option deps_output="../Release/bin/" />
+				<Option external_deps="../Release/lib/libtxrand.a;../Release/lib/libTXRandApi.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="$(VC_IncludePath)/" />
+					<Add directory="$(WindowsSDK_IncludePath)/" />
+					<Add directory="../include/" />
+				</Compiler>
+				<Linker>
+					<Add library="../Release/lib/libtxrand.a" />
+					<Add library="../Release/lib/libTXRandApi.a" />
+					<Add directory="$(VC_LibraryPath_x64)/" />
+					<Add directory="$(WindowsSDK_LibraryPath_x64)/" />
+					<Add directory="../Release/lib/" />
+					<Add directory="$(LibraryPath)/" />
+				</Linker>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="../Release/bin32/TXDarkForest" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release/" />
+				<Option deps_output="../Release/bin32/" />
+				<Option external_deps="../Release/lib32/libtxrand.a;../Release/lib32/libTXRandApi.a;" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="$(VC_IncludePath)/" />
+					<Add directory="$(WindowsSDK_IncludePath)/" />
+					<Add directory="../include/" />
+				</Compiler>
+				<Linker>
+					<Add library="../Release/lib32/libtxrand.a" />
+					<Add library="../Release/lib32/libTXRandApi.a" />
+					<Add directory="$(VC_LibraryPath_x86)/" />
+					<Add directory="$(WindowsSDK_LibraryPath_x86)/" />
+					<Add directory="../Release/lib32/" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="Civilization.cpp" />
+		<Unit filename="TXDarkForest.cpp" />
+		<Unit filename="Utilities.cpp" />
+		<Unit filename="civilization.hpp" />
+		<Unit filename="enums.hpp" />
+		<Unit filename="ptdef.hpp" />
+		<Unit filename="util_csv.cpp" />
+		<Unit filename="util_csv.hpp" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1677821405 source:c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo\arrtest.c
+	"tests.h"
+	<stdio.h>
+	<string.h>
+
+1678512049 c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo\tests.h
+	"txrand.h"
+
+1681651422 c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\include\\txrand.h
+	<stdlib.h>
+
+1677821370 source:c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo\main.c
+	"txrand.h"
+	<stdio.h>
+	<Windows.h>
+	"tests.h"
+
+1678512178 source:c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo\tbyassert.c
+	"tests.h"
+	<assert.h>
+
+1681651419 source:c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo\tests.c
+	<stdio.h>
+	<stdlib.h>
+	"txrand.h"
+	"tests.h"
+	<assert.h>
+

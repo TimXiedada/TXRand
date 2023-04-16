@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="TXRand 工作区">
+		<Project filename="refapiwrapper/TXRandApi.cbp" />
+		<Project filename="txrand/TXRand.cbp" />
+		<Project filename="demo/TXRandSample.cbp" />
+		<Project filename="demo2/TXDarkForest++.cbp">
+			<Depends filename="txrand/TXRand.cbp" />
+			<Depends filename="refapiwrapper/TXRandApi.cbp" />
+		</Project>
+	</Workspace>
+</CodeBlocks_workspace_file>

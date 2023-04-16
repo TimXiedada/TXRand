@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="TXRandDemo" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="../Debug/bin32/TXRandDemo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug/" />
+				<Option deps_output="../Debug/bin32/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="$(VC_IncludePath)/" />
+					<Add directory="$(WindowsSDK_IncludePath)/" />
+					<Add directory="../include/" />
+					<Add directory="../" />
+				</Compiler>
+				<Linker>
+					<Add library="../Debug/lib32/libTXRandApi.a" />
+					<Add library="../Debug/lib32/libtxrand.a" />
+					<Add directory="$(VC_LibraryPath_x86)/" />
+					<Add directory="$(WindowsSDK_LibraryPath_x86)/" />
+					<Add directory="../Debug/lib32/" />
+					<Add directory="Debug/lib32/" />
+				</Linker>
+			</Target>
+			<Target title="Debug x64">
+				<Option output="../Debug/bin/TXRandDemo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug/" />
+				<Option deps_output="../Debug/bin/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="$(VC_IncludePath)/" />
+					<Add directory="$(WindowsSDK_IncludePath)/" />
+					<Add directory="../include/" />
+					<Add directory="../" />
+				</Compiler>
+				<Linker>
+					<Add library="../Debug/lib/libTXRandApi.a" />
+					<Add library="../Debug/lib/libtxrand.a" />
+					<Add directory="$(VC_LibraryPath_x64)/" />
+					<Add directory="$(WindowsSDK_LibraryPath_x64)/" />
+					<Add directory="../Debug/lib/" />
+				</Linker>
+			</Target>
+			<Target title="Release x64">
+				<Option output="../Release/bin/TXRandDemo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release/" />
+				<Option deps_output="../Release/bin/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="$(VC_IncludePath)/" />
+					<Add directory="$(WindowsSDK_IncludePath)/" />
+					<Add directory="../include/" />
+					<Add directory="../" />
+				</Compiler>
+				<Linker>
+					<Add directory="$(VC_LibraryPath_x64)/" />
+					<Add directory="$(WindowsSDK_LibraryPath_x64)/" />
+					<Add directory="../Release/lib/" />
+				</Linker>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="../Release/bin32/TXRandDemo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release/" />
+				<Option deps_output="../Release/bin32/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="$(VC_IncludePath)/" />
+					<Add directory="$(WindowsSDK_IncludePath)/" />
+					<Add directory="../include/" />
+					<Add directory="../" />
+				</Compiler>
+				<Linker>
+					<Add directory="$(VC_LibraryPath_x86)/" />
+					<Add directory="$(WindowsSDK_LibraryPath_x86)/" />
+					<Add directory="../Release/lib32/" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="../include/private/tests.h" />
+		<Unit filename="arrtest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tbyassert.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tests.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
