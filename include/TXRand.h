@@ -26,9 +26,15 @@ extern "C" {
 	_Bool __cdecl call_os_rng(void* buffer, size_t size);
 	/*--------------------楚--------------------河--------------------汉--------------------界--------------------*/
 	//randbool.c
-	_Bool TXRANDAPI randbool(const double weight);
+	_Bool TXRANDAPI randbool_w(const double weight);
 	_Bool TXRANDAPI randbool_b(void); 
 	_Bool TXRANDAPI randbool_q(void);
+    #ifdef RANDBOOL_BINOM
+        #define randbool randbool_b
+    #else
+        #define randbool randbool_q
+    #endif // RANDBOOL_BINOM
+
 	/*--------------------楚--------------------河--------------------汉--------------------界--------------------*/
 	//randint.c
 	int TXRANDAPI randbelow(const int n);

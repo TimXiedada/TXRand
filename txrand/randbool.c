@@ -15,7 +15,7 @@
 /*
     这段代码定义了三个函数，都用于生成随机的布尔值。
     
-    第一个函数 randbool 采用一个参数 weight，它用来控制生成布尔值为 true 的概率。
+    第一个函数 randbool_w 采用一个参数 weight，它用来控制生成布尔值为 true 的概率。
     首先调用 random() 函数生成一个 [0,1) 之间的随机数 i，然后将 i 和 weight 进行比较，
     如果 i 小于 weight，则返回 true，否则返回 false。
     
@@ -29,7 +29,7 @@
     这个函数还使用了静态变量来保存当前已经生成的随机数和还剩余的二进制位数，以便下次调用时继续使用。
 */
 
-_Bool TXRANDAPI  randbool(double weight) {
+_Bool TXRANDAPI  randbool_w(double weight) {
 	const double i = random();
 	_Bool returnvalue = (i < weight);
 	return returnvalue;

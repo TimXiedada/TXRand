@@ -49,7 +49,7 @@ void randbool_test(void) {
 	int x[] = { 0, 0 };
 	_Bool r = 0;
 	for (int i = 0; i < 1000000; i++) {
-		r = randbool(w);
+		r = randbool_w(w);
 
 		if (r) x[1]++;
 		else x[0]++;
