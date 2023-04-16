@@ -26,7 +26,7 @@
     <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\txrandi.h" />
+    <ClInclude Include="..\include\txrand.h" />
     <ClInclude Include="txrandpr.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

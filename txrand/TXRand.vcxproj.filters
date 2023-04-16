@@ -32,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\txrandi.h">
+    <ClInclude Include="..\include\txrand.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="txrandpr.h">
