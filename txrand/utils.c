@@ -1,3 +1,4 @@
+// utils.c
 /*  SPDX-License-Identifier: ISC  */
 /*
     Copyright 2021-2023 Xie Youtian
@@ -24,6 +25,8 @@
 */
 
 #include "txrand.h"
+#include "txrandpr.h"
+
 #include <string.h>
 int uniq_rand_arr_version_flag = 0;
 const int default_uniq_rand_arr_version_flag = 3;
@@ -141,3 +144,4 @@ _Bool PRIVATEAPI obtain_cached_ull(unsigned long long* const pull,const size_t s
     *pull = ullcache[--i];
     return 1;
 } 
+// end utils.c

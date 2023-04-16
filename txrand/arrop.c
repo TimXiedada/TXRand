@@ -1,3 +1,4 @@
+// arrop.c
 /*  SPDX-License-Identifier: ISC  */
 /*
     Copyright 2021-2023 Xie Youtian
@@ -9,6 +10,7 @@
 
 
 #include "txrand.h"
+#include "txrandpr.h"
 #include <string.h>
 
 /*
@@ -33,7 +35,6 @@
 
 */
 
-size_t* PRIVATEAPI uniq_rand_arr(const size_t len, const size_t range, size_t* const arr);
 
 static inline void* PRIVATEAPI mboffset(const void* pstart, size_t offsetb, size_t bs) {
     size_t _pdest;
@@ -135,3 +136,4 @@ static _Bool insert_in_array(size_t srcIndex, size_t dstIndex, size_t bs, void* 
     return 1;
 }
 
+// end arrop.c

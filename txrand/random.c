@@ -1,3 +1,4 @@
+// random.c
 /*  SPDX-License-Identifier: ISC  */
 /*
     Copyright 2021-2023 Xie Youtian
@@ -24,10 +25,11 @@
 */
 
 #include "txrand.h"
+#include "txrandpr.h"
+
 #include <limits.h>
 #include <math.h>
 
-_Bool PRIVATEAPI obtain_cached_ull(unsigned long long* const pull, const size_t sizeofull);
 
 double TXRANDAPI random(void)
 {
@@ -135,3 +137,4 @@ float TXRANDAPI uniformf(const float a, const float b) {
     return a > b ? delta + b : delta + a;
 }
 
+// end random.c

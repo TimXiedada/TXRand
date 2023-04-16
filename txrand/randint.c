@@ -1,3 +1,4 @@
+// randint.c
 /*  SPDX-License-Identifier: ISC  */
 /*
     Copyright 2021-2023 Xie Youtian
@@ -29,8 +30,8 @@
     其中，随机数生成的核心是 obtain_cached_ull 函数。其他函数都是对其进行了一些简单的封装，使其更加方便使用。
 */
 
+#include "txrandpr.h"
 #include "txrand.h"
-_Bool PRIVATEAPI obtain_cached_ull(unsigned long long* const pull, const size_t sizeofull);
 int TXRANDAPI  randbelow(const int n)
 {
     unsigned long long num;
@@ -172,3 +173,4 @@ unsigned short TXRANDAPI randintus(const unsigned short a, const unsigned short 
     if (k == -1) return 0;
     return b > a ? a + k : b + k;
 }
+// end randint.c

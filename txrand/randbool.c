@@ -1,3 +1,4 @@
+// randbool.c
 /*  SPDX-License-Identifier: ISC  */
 /*
     Copyright 2021-2023 Xie Youtian
@@ -8,6 +9,8 @@
 */
 
 #include "txrand.h"
+#include "txrandpr.h"
+
 #include <limits.h>
 /*
     这段代码定义了三个函数，都用于生成随机的布尔值。
@@ -26,7 +29,6 @@
     这个函数还使用了静态变量来保存当前已经生成的随机数和还剩余的二进制位数，以便下次调用时继续使用。
 */
 
-_Bool PRIVATEAPI obtain_cached_ull(unsigned long long* const pull, const size_t sizeofull);
 _Bool TXRANDAPI  randbool(double weight) {
 	const double i = random();
 	_Bool returnvalue = (i < weight);
@@ -54,3 +56,4 @@ _Bool TXRANDAPI  randbool_q(void)
     if (!i) { obtain_cached_ull(&num, (sizeof num)); i = (sizeof num) * CHAR_BIT; };
     return (_Bool)((num >> (--i)) & 1ULL);
 }
+// end randbool.c
