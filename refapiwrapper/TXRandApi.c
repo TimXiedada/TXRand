@@ -1,4 +1,4 @@
-﻿/*  SPDX-License-Identifier: CC0-1.0  */
+/*  SPDX-License-Identifier: CC0-1.0  */
 /*
     A wrapper of Windows API to TXRand random source.
     Add this into your project if you would like to use TXRand on Windows XP or later version.
@@ -18,7 +18,7 @@
 
 */
 
-#if (defined _WIN32) || (defined MINGW32) || (defined MINGW64)
+#if (defined _WIN32) || (defined _WIN64) || (defined MINGW32) || (defined MINGW64)
 #include <windows.h>
 #ifdef __cplusplus
 extern "C" bool __cdecl call_os_rng(void* buffer, size_t size);
