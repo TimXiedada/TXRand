@@ -70,7 +70,7 @@ extern "C" {
 	void* TXRANDAPI  sample(const void* pop, size_t size, size_t count, size_t k, void* dest);
 	void* TXRANDAPI  choice(const void* seq, size_t size, size_t count); // ok tested
 	void TXRANDAPI shuffle(void* x, size_t size, size_t count); // ok tested
-	void* TXRANDAPI  fillbuffer(void* buffer, size_t size, unsigned count); // ok tested
+	void* TXRANDAPI  fillbuffer(void* buffer, size_t size, size_t count); // ok tested
 
 #ifdef __cplusplus
 }

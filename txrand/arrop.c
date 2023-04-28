@@ -109,7 +109,7 @@ void shuffle(void* seq, size_t size, size_t count) {
 }
 
 
-void* TXRANDAPI fillbuffer(void* buffer, size_t size, unsigned count)
+void* TXRANDAPI fillbuffer(void* buffer, size_t size, size_t count)
 {
     _Bool succ = call_os_rng(buffer, size * count);
     if (!succ) return NULL;
