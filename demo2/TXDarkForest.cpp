@@ -17,7 +17,7 @@
 
 #include <cassert>
 #include <stack>
-#include <iostream>
+#include <cstdio>
 #include <sstream>
 #include <string>
 
@@ -49,6 +49,7 @@ UniStatInfo AnalyzeUniverse(
 void UniverseMain(size_t cvCount);
 bool ExitCond(const UniStatInfo si) 
 { 
+    if (si.nAlive == si.nAggresive&& si.nAggresive == 2)return true;
     return si.nAlive <= 1 || si.nAggresive <= 0 || si.nPositive <= 0; 
 }
 
@@ -69,7 +70,7 @@ void UniverseMain(const size_t cvCount)
     using std::string;
     char fmtBuf[128];
     const char* header = "round,nAlive,nAggresive,nNeutral,nFriendly,nTotal,maxMark,champion";
-    const char* fmt = "%u,%u,%u,%u,%u,%u,%g,%lu";
+    const char* fmt = "%u,%u,%u,%u,%u,%u,%8.3f,%lu";
     Civilization** const cvpArray = new Civilization*[cvCount];
     for (size_t i = 0;i < cvCount;i++)cvpArray[i] = new Civilization;
     Civilization* pCurrentCV;
@@ -78,18 +79,21 @@ void UniverseMain(const size_t cvCount)
     UniStatInfo statInfo;
     size_t round=0, i=0;
     std::vector<CVInteractRecord> interactRecord;
-    //SetUniverse(cvArray,&interactRecord,&round,&i);
-    //shuffle(cvpArray,sizeof(Civilization*),cvCount);
-    //for (i = 0; i < cvCount; i++) {
-    //    std::printf(
-    //        "%llu,%d,%s,%g\n",
-    //        cvpArray[i],
-    //        cvpArray[i]->Type(),
-    //        cvpArray[i]->IsPositive()?"true":"false",
-    //        cvpArray[i]->Mark()
-    //        );
+    // SetUniverse(cvpArray,&interactRecord,&round,&i);
+    shuffle(cvpArray,sizeof(Civilization*),cvCount);
+    FILE* pUniListCSV = fopen("unilist.csv", "w");
+    std::fputs("Serial,Type,Is Positive,Initial Mark\n",pUniListCSV);
+    for (i = 0; i < cvCount; i++) {
+        std::fprintf(
+            pUniListCSV,
+            "%lu,%s,%s,%8.3f\n",
+            cvpArray[i]->Serial(),
+            CV_TYPE_STR[cvpArray[i]->Type()],
+            cvpArray[i]->IsPositive()?"TRUE":"FALSE",
+            cvpArray[i]->Mark()
+            );
 
-    //}
+    }
     statInfo = AnalyzeUniverse(cvpArray, cvpInteractStack, cvCount);
     std::sprintf(
         fmtBuf,fmt,
@@ -102,15 +106,15 @@ void UniverseMain(const size_t cvCount)
         statInfo.maxMark,
         statInfo.champion->Serial()
     );
-    std::cout << "Origin Uni:" << std::endl << header << std::endl << fmtBuf << std::endl << string("-") * 40;
+    std::puts("Origin Uni:\n"),std::puts(header),std::puts(fmtBuf),std::puts((string("-") * 40).c_str());
     round = 1;
-    std::cout << std::endl << header << std::endl;
+    std::puts( header);
     do 
     {
-        
+        i = 1;
         while (! cvpInteractStack.empty()) 
         {
-            i = 1;
+            
             Civilization* pInteractCV = cvpInteractStack.top();
             if (!pInteractCV->Alive()) {
                 cvpInteractStack.pop(); 
@@ -129,8 +133,8 @@ void UniverseMain(const size_t cvCount)
             cvpInteractStack.pop();
         }
         statInfo = AnalyzeUniverse(cvpArray, cvpInteractStack, cvCount);
-        std::cout.put('\n');
-        std::cout.flush();
+        //std::putchar('\n');
+        std::fflush(stdout);
         std::sprintf(
             fmtBuf, fmt,
             round,
@@ -142,24 +146,49 @@ void UniverseMain(const size_t cvCount)
             statInfo.maxMark,
             statInfo.champion->Serial()
         );
-        std::cout << fmtBuf ;
+        std::puts(fmtBuf) ;
         shuffle(cvpArray, sizeof(Civilization*), cvCount);
         round++;
-    } while (! ExitCond(statInfo));
-    std::cout.put('\n');
+    } while (!ExitCond(statInfo));
+    // std::cout.put('\n');
     std::printf((string("-")*40).c_str());
     std::cout.put('\n');
-    
-    
-    /*
+    FILE* siCSVfp = fopen("statinfo.csv","w");
+    FILE* irCSVfp = fopen("irecord.csv", "w");
+    std::fputs("Round,In-Round No.,Civilization 1,Civilization 2,Result\n", irCSVfp);
     for (const auto & e : interactRecord) {
-        csv_line lnbuf;  
-        
-        lnbuf.push_back((std::ostringstream() << e.cv1).str());
-        lnbuf.push_back((std::ostringstream() << e.cv2).str());
-        
-       
-        
+        std::fprintf(
+            irCSVfp,
+            "%llu,%llu,%lu,%lu,%s\n",
+            e.round,
+            e.i,
+            e.cv1->Serial(),
+            e.cv2->Serial(),
+            IRESULT_STR[e.ir]
+        );
+    }
+    /*
+    i = 0;
+    std::fputs("Serial,Alive Rounds,Cooperation,Requested Cooperation,Attack,Fight,Victory,Interact Count,Eliminates,Maximum Score\n",siCSVfp);
+    for (Civilization::CVStatInfo si; i < cvCount; i++) {
+        si = cvpArray[i]->StatInfo(interactRecord);
+        std::fprintf(
+            siCSVfp,
+            "%ld,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%8.3f,%8.3f\n",
+            cvpArray[1]->Serial(),
+            si.aliveRound,
+            si.attack,
+            si.cooperation,
+            si.cooperationAct,
+            si.attack,
+            si.fight,
+            si.victory,
+            si.interact,
+            si.kills.size(),
+            si.maxScore,
+            si.minScore
+
+        );
     }
     */
     for (i = 0; i < cvCount; i++) {
