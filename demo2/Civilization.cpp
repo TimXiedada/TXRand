@@ -83,6 +83,7 @@ IRESULT Civilization::Interact(Civilization& cvt)
 Civilization::CVStatInfo Civilization::StatInfo(const std::vector<CVInteractRecord> & ir) const
 {
     Civilization::CVStatInfo rsi;
+    std::memset(&rsi,0,sizeof rsi);
     /*
     bool act;
 
@@ -95,9 +96,9 @@ Civilization::CVStatInfo Civilization::StatInfo(const std::vector<CVInteractReco
     */
     for (const auto & ln : ir) {
         
-        if (ln.cv1==this || ln.cv2==this) switch (ln.ir) {
+        if (ln.cv1->_serial==this->_serial || ln.cv2->_serial == this->_serial) switch (ln.ir) {
             case IR_COOPERATION:
-                (ln.cv1 == this) ? (rsi.cooperationAct++, rsi.cooperation++) : rsi.cooperation++;
+                (ln.cv1->_serial == this->_serial) ? (rsi.cooperationAct++, rsi.cooperation++) : rsi.cooperation++;
                 break;
 
             case IR_AVICTORYKILL:

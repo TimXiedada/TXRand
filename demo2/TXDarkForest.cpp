@@ -68,7 +68,7 @@ int main()
 void UniverseMain(const size_t cvCount) 
 {
     using std::string;
-    char fmtBuf[128];
+    char fmtBuf[4096];
     const char* header = "round,nAlive,nAggresive,nNeutral,nFriendly,nTotal,maxMark,champion";
     const char* fmt = "%u,%u,%u,%u,%u,%u,%8.3f,%lu";
     Civilization** const cvpArray = new Civilization*[cvCount];
@@ -108,7 +108,8 @@ void UniverseMain(const size_t cvCount)
     );
     std::puts("Origin Uni:\n"),std::puts(header),std::puts(fmtBuf),std::puts((string("-") * 40).c_str());
     round = 1;
-    std::puts( header);
+    std::puts(header);
+
     do 
     {
         i = 1;
@@ -150,15 +151,17 @@ void UniverseMain(const size_t cvCount)
         shuffle(cvpArray, sizeof(Civilization*), cvCount);
         round++;
     } while (!ExitCond(statInfo));
+
     // std::cout.put('\n');
     std::printf((string("-")*40).c_str());
     std::cout.put('\n');
-    FILE* siCSVfp = fopen("statinfo.csv","w");
+    // FILE* siCSVfp = fopen("statinfo.csv","w");
     FILE* irCSVfp = fopen("irecord.csv", "w");
     std::fputs("Round,In-Round No.,Civilization 1,Civilization 2,Result\n", irCSVfp);
+
     for (const auto & e : interactRecord) {
-        std::fprintf(
-            irCSVfp,
+        std::sprintf(
+            fmtBuf,
             "%llu,%llu,%lu,%lu,%s\n",
             e.round,
             e.i,
@@ -166,14 +169,16 @@ void UniverseMain(const size_t cvCount)
             e.cv2->Serial(),
             IRESULT_STR[e.ir]
         );
+        std::fputs(fmtBuf, irCSVfp);
     }
-    /*
+    
     i = 0;
+    /*
     std::fputs("Serial,Alive Rounds,Cooperation,Requested Cooperation,Attack,Fight,Victory,Interact Count,Eliminates,Maximum Score\n",siCSVfp);
     for (Civilization::CVStatInfo si; i < cvCount; i++) {
         si = cvpArray[i]->StatInfo(interactRecord);
-        std::fprintf(
-            siCSVfp,
+        std::sprintf(
+            fmtBuf,
             "%ld,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%llu,%8.3f,%8.3f\n",
             cvpArray[1]->Serial(),
             si.aliveRound,
@@ -189,12 +194,15 @@ void UniverseMain(const size_t cvCount)
             si.minScore
 
         );
+        std::fputs(fmtBuf, siCSVfp);
     }
     */
+
     for (i = 0; i < cvCount; i++) {
         delete cvpArray[i];
     }
     delete[] cvpArray;
+
 }
 
 UniStatInfo AnalyzeUniverse(
