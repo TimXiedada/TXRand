@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="TXDarkForest++" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../Debug/bin/TXDarkForest++" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="../Debug/lib/libtxrand.a" />
+					<Add library="../Debug/lib/libTXRandApi.a" />
+					<Add directory="../Debug/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="../Release/bin/TXDarkForest++" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../Release/lib/libtxrand.a" />
+					<Add library="../Release/lib/libTXRandApi.a" />
+					<Add directory="../Release/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="../include" />
+		</Compiler>
+		<Unit filename="Civilization.cpp" />
+		<Unit filename="TXDarkForest.cpp" />
+		<Unit filename="Utilities.cpp" />
+		<Unit filename="civilization.hpp" />
+		<Unit filename="enums.hpp" />
+		<Unit filename="ptdef.hpp" />
+		<Unit filename="util_csv.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="util_csv.hpp" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

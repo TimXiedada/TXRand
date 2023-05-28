@@ -1,0 +1,49 @@
+# depslib dependency file v1.0
+1680360042 source:c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo2\util_csv.cpp
+	"util_csv.hpp"
+
+1680357305 c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo2\util_csv.hpp
+	<vector>
+	<string>
+	<iostream>
+	<fstream>
+
+1685255248 source:c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo2\txdarkforest.cpp
+	<cassert>
+	<stack>
+	<cstdio>
+	<sstream>
+	<string>
+	"Civilization.hpp"
+	"Enums.hpp"
+	"txrand.h"
+	"util_csv.hpp"
+
+1682771707 c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo2\civilization.hpp
+	"enums.hpp"
+	<vector>
+	<txrand.h>
+
+1682770385 c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo2\enums.hpp
+
+1682831914 c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\include\txrand.h
+	<stdlib.h>
+
+1685283459 source:c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo2\civilization.cpp
+	"civilization.hpp"
+	<stdbool.h>
+	<txrand.h>
+	<cstdlib>
+	<cassert>
+	<cstring>
+
+1685283124 source:c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo2\utilities.cpp
+	"enums.hpp"
+	"civilization.hpp"
+	<cstdlib>
+	<txrand.h>
+	"ptdef.hpp"
+	"cassert"
+
+1677837349 c:\users\administrator.desktop-n9c2dgq\source\repos\txrand\demo2\ptdef.hpp
+

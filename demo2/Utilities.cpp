@@ -25,12 +25,12 @@ IRESULT Fight(Civilization& cv1, Civilization& cv2,bool attack) {
     //	return IR_NOTHING;
     //cv1._statInfo.fight++;
     //cv2._statInfo.fight++;
-    double Δm;
+    double deltam;
     if (cv1._mark > cv2._mark) {
     m0:;
-        Δm = (cv1._mark + cv2._mark) * POINT_FIGHTWIN;
-        cv1._mark += Δm * POINT_FIGHTWIN;
-        cv2._mark -= Δm * POINT_FIGHTLOSE;
+        deltam = (cv1._mark + cv2._mark) * POINT_FIGHTWIN;
+        cv1._mark += deltam * POINT_FIGHTWIN;
+        cv2._mark -= deltam * POINT_FIGHTLOSE;
         //日志记录功能
         //cv1._statInfo.victory++;
         if (!cv2.Alive()) {
@@ -42,9 +42,9 @@ IRESULT Fight(Civilization& cv1, Civilization& cv2,bool attack) {
     }
     else if (cv1._mark < cv2._mark) {
     m1:;
-        Δm = (cv1._mark + cv2._mark) * POINT_FIGHTWIN;
-        cv2._mark += Δm * POINT_FIGHTWIN;
-        cv1._mark -= Δm * POINT_FIGHTLOSE;
+        deltam = (cv1._mark + cv2._mark) * POINT_FIGHTWIN;
+        cv2._mark += deltam * POINT_FIGHTWIN;
+        cv1._mark -= deltam * POINT_FIGHTLOSE;
         //cv2._statInfo.victory++;
         //日志记录功能
         if (!cv1.Alive()) {
@@ -74,11 +74,11 @@ IRESULT Fight(Civilization& cv1, Civilization& cv2,bool attack) {
 }
 
 IRESULT Cooperation(Civilization& cv1, Civilization& cv2) {
-    double Δm;
-    Δm = cv1._mark + cv2._mark;
-    cv1._mark += Δm;
-    cv2._mark += Δm;
-    cv1.UpdateMaxMark(); 
+    double deltam;
+    deltam = cv1._mark + cv2._mark;
+    cv1._mark += deltam;
+    cv2._mark += deltam;
+    cv1.UpdateMaxMark();
     cv2.UpdateMaxMark();
     return IR_COOPERATION;
 }

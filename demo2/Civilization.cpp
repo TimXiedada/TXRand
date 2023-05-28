@@ -17,7 +17,7 @@
 #include <txrand.h>
 #include <cstdlib>
 #include <cassert>
-
+#include <cstring>
 /*
 Civilization::Civilization()
     :_type((CV_TYPE)randbelow(3)),_isPositive(randbool_b()),_mark(uniform(8.0,12.0)),_serial(randbelowul(0))
@@ -31,7 +31,7 @@ Civilization::Civilization(double initMark,CV_TYPE civilizationType, bool isPosi
     :_type(civilizationType),_isPositive(isPositive),_mark(initMark), _serial(serial)
 {
     // 日志记录功能即将实现
-    //pos = this; 
+    //pos = this;
 }
 */
 /*
@@ -42,12 +42,12 @@ Civilization::Civilization(double initMark)
     //pos = this;
 }
 */
-Civilization::~Civilization() 
+Civilization::~Civilization()
 {
     // 日志记录功能即将实现
     //assert(pos == this);
 }
-IRESULT Civilization::Interact(Civilization& cvt) 
+IRESULT Civilization::Interact(Civilization& cvt)
 {
     Civilization& me = (*this);
     assert(me.Alive());   //幽灵没有这个资格
@@ -91,11 +91,11 @@ Civilization::CVStatInfo Civilization::StatInfo(const std::vector<CVInteractReco
     {
         if (cv1 == this) { act = true; return true; }
         else if (cv2 == this) { act = false; return true; }
-        else return false; 
+        else return false;
     };
     */
     for (const auto & ln : ir) {
-        
+
         if (ln.cv1->_serial==this->_serial || ln.cv2->_serial == this->_serial) switch (ln.ir) {
             case IR_COOPERATION:
                 (ln.cv1->_serial == this->_serial) ? (rsi.cooperationAct++, rsi.cooperation++) : rsi.cooperation++;
@@ -119,17 +119,17 @@ Civilization::CVStatInfo Civilization::StatInfo(const std::vector<CVInteractReco
                 rsi.fight++, rsi.victory++, rsi.kills.push_back(ln.cv1);
                 break;
             case IR_PVICTORY:
-                rsi.fight++, rsi.victory++; 
+                rsi.fight++, rsi.victory++;
                 break;
             case IR_PDEFEAT:
                 rsi.fight++;
                 break;
-            case IR_PDEFEATDIED: 
+            case IR_PDEFEATDIED:
                 rsi.fight++;
                 rsi.aliveRound = ln.round - 1;
                 goto EndLoop; // 节省时间
             }
-        
+
     }
     EndLoop:;
     rsi.maxScore = this->_maxmark;
