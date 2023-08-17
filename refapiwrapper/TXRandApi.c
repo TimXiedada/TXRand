@@ -67,5 +67,31 @@ _Bool __cdecl call_os_rng(void* buffer, size_t size)
     return (_Bool)CryptGenRandom(randHandle, (DWORD)size, (BYTE*)buffer);
 }
 #elif defined __unix
+#else
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+#define RAND_FUNC_BITS_PROVIDED ((unsigned)log2(((unsigned)RAND_MAX + 1u)))
+#define RFBS RAND_FUNC_BITS_PROVIDED
+static _Bool __fastcall StdlibRandFuncValueBitwise(void){
+    // This function will return a random bool value.
+    static _Bool first_run;
+    static unsigned r,i;
+    if (!first_run) { // Seed the RNG with a better seed.
+        void * p = malloc(1);
+        srand((unsigned)time(NULL)^(unsigned)clock()^(unsigned)p);
+        free(p);
+        first_run = 1;
+    }
+    if (!i) i = RFBS,r = rand();
+    return (r >> --i)&1u;
+}
 
+_Bool __cdecl call_os_rng(void * buffer, size_t size) {
+    if (!buffer || !size)return 1;
+    size_t wbyte,wbit;
+    for (wbyte=0;wbyte<size;wbyte++){
+
+    }
+}
 #endif
