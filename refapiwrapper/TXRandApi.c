@@ -71,6 +71,7 @@ _Bool __cdecl call_os_rng(void* buffer, size_t size)
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <limits.h>
 #define RAND_FUNC_BITS_PROVIDED ((unsigned)log2(((unsigned)RAND_MAX + 1u)))
 #define RFBS RAND_FUNC_BITS_PROVIDED
 static _Bool __fastcall StdlibRandFuncValueBitwise(void){
@@ -91,7 +92,10 @@ _Bool __cdecl call_os_rng(void * buffer, size_t size) {
     if (!buffer || !size)return 1;
     size_t wbyte,wbit;
     for (wbyte=0;wbyte<size;wbyte++){
-
+        for (wbit=0;wbit<CHAR_BIT;wbit++){
+            (unsigned char*)buffer[wbyte] |= StdlibRandFuncValueBitwise()?(1u << wbit):(0u)
+        }
     }
+    return (_Bool)1;
 }
 #endif
