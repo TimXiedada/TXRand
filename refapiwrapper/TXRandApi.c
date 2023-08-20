@@ -60,7 +60,7 @@ _Bool __cdecl call_os_rng(void* buffer, size_t size)
 {
     if (!phRandHandle) {
         _Bool succ = InitRandSource();
-        if (!succ) return 0;
+        if (!succ || !phRandHandle) return 0;
         atexit(RandSourceClean);
     }
     HCRYPTPROV randHandle = *phRandHandle;
