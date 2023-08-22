@@ -68,6 +68,7 @@ _Bool __cdecl call_os_rng(void* buffer, size_t size)
 }
 #elif defined __unix
 #else
+
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
@@ -84,7 +85,9 @@ static _Bool __fastcall StdlibRandFuncValueBitwise(void){
         free(p);
         first_run = 1;
     }
-    if (!i) i = RFBS,r = rand();
+    if (!i) 
+        i = RFBS,
+        r = rand();
     return (r >> --i)&1u;
 }
 
@@ -93,7 +96,8 @@ _Bool __cdecl call_os_rng(void * buffer, size_t size) {
     size_t wbyte,wbit;
     for (wbyte=0;wbyte<size;wbyte++){
         for (wbit=0;wbit<CHAR_BIT;wbit++){
-            (unsigned char*)buffer[wbyte] |= StdlibRandFuncValueBitwise()?(1u << wbit):(0u)
+            // register _Bool rv = rv;
+            ((unsigned char*)buffer)[wbyte] ^= (StdlibRandFuncValueBitwise() ? (1u << wbit) : (0u));
         }
     }
     return (_Bool)1;
