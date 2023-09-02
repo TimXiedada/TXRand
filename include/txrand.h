@@ -5,7 +5,7 @@
 
     Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
-    THE SOFTWARE IS PROVIDED °∞AS IS°± AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+    THE SOFTWARE IS PROVIDED ‚ÄúAS IS‚Äù AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
 #ifndef _TXRAND_H_
@@ -24,7 +24,7 @@ extern "C" {
     //typedef void*  pvoid;
     // Wrapper to OS random number generator.
     _Bool __cdecl call_os_rng(void* buffer, size_t size);
-    /*--------------------≥˛--------------------∫”--------------------∫∫--------------------ΩÁ--------------------*/
+    /*--------------------Ê•ö--------------------Ê≤≥--------------------Ê±â--------------------Áïå--------------------*/
     //randbool.c
     _Bool TXRANDAPI randbool_w(const double weight);
     _Bool TXRANDAPI randbool_b(void); 
@@ -35,7 +35,7 @@ extern "C" {
         #define randbool randbool_q
     #endif // RANDBOOL_BINOM
 
-    /*--------------------≥˛--------------------∫”--------------------∫∫--------------------ΩÁ--------------------*/
+    /*--------------------Ê•ö--------------------Ê≤≥--------------------Ê±â--------------------Áïå--------------------*/
     //randint.c
     int TXRANDAPI randbelow(const int n);
     long TXRANDAPI randbelowl(const long n);
@@ -54,8 +54,8 @@ extern "C" {
     unsigned long TXRANDAPI randintul(const unsigned long a, const unsigned long b);
     unsigned long long TXRANDAPI randintull(const unsigned long long a, const unsigned long long b);
     unsigned short TXRANDAPI randintus(const unsigned short a, unsigned const short b);
-
-    /*--------------------≥˛--------------------∫”--------------------∫∫--------------------ΩÁ--------------------*/
+    #define dice() (randint(1,7))
+    /*--------------------Ê•ö--------------------Ê≤≥--------------------Ê±â--------------------Áïå--------------------*/
     //random.c
     double TXRANDAPI random(void);
     float TXRANDAPI randomf(void);
@@ -65,7 +65,7 @@ extern "C" {
     double TXRANDAPI uniform(const double a, const double b);
     float TXRANDAPI uniformf(const float a, const float b);
 
-    /*--------------------≥˛--------------------∫”--------------------∫∫--------------------ΩÁ--------------------*/
+    /*--------------------Ê•ö--------------------Ê≤≥--------------------Ê±â--------------------Áïå--------------------*/
     //arrop.c
     void* TXRANDAPI  sample(const void* pop, size_t size, size_t count, size_t k, void* dest);
     void* TXRANDAPI  choice(const void* seq, size_t size, size_t count); // ok tested
