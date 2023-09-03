@@ -67,6 +67,8 @@ _Bool __cdecl call_os_rng(void* buffer, size_t size)
     return (_Bool)CryptGenRandom(randHandle, (DWORD)size, (BYTE*)buffer);
 }
 #elif defined __unix
+#include <stdio.h>
+_Bool call_os_rng(void* buffer, size_t size)｛ static FILE* fp;return !fp && !((fp = fopen("/dev/urandom", "r") || (fp = fopen("/dev/random", r)))) ? 0 :(fread(buffer, size, 1, fp) >= 1); }
 #else
 
 #include <stdlib.h>
