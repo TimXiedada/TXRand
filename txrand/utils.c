@@ -12,16 +12,6 @@
 /*
 
 
-    这是一个生成不重复随机数数组的代码库。它提供了三种不同的算法来实现这个目标，并根据全局变量 uniq_rand_arr_version_flag 来决定使用哪个算法。
-
-    其中 uniq_rand_arr_v1 是最简单的版本，它使用了两个循环来生成随机数数组，第一个循环依次生成每个随机数，第二个循环用来检查生成的随机数是否与之前的随机数重复。当发现重复时，重新生成随机数。
-
-    uniq_rand_arr_v2 使用了一种更高效的算法。它首先生成了一个指定范围内的链表，然后循环生成随机数，并将链表中的元素删除。当生成的随机数为 0 时，删除链表头部元素。当随机数不为 0 时，找到链表中对应的元素，删除它。
-
-    uniq_rand_arr_v3 也采用了一种高效的算法。它生成长为范围的结构体数组，其中每个元素包含一个数字和一个权重。权重由操作系统随机数生成器生成。然后对数组按照权重排序，最后将数字存入随机数数组中。
-
-    obtain_cached_ull 是一个辅助函数，用来从一个缓存中获取一个无符号长整型数。这个缓存是一个静态数组，初始化时使用操作系统随机数生成器填充。每次调用时，函数会将缓存中最后一个元素返回，并将索引减 1。
-
 */
 
 #include "txrand.h"
@@ -45,7 +35,7 @@ static size_t* PRIVATEAPI uniq_rand_arr_v2(const size_t len, const size_t range,
     if (!head)return NULL;
     current = head;
     current->n = 0;    
-    call_os_rng(ka, sizeof(k)* len);
+    call_rng(ka, sizeof(k)* len);
     for (i = 1; i < range; i++) {
         current->next = malloc(sizeof(struct _node));
         if (!(current->next))return NULL;
@@ -88,7 +78,7 @@ static size_t* PRIVATEAPI uniq_rand_arr_v3(const size_t len, const size_t range,
     struct pair* pa = (struct pair*)malloc(sizeof(struct pair) * range);
     if (!pa)return NULL;
     size_t i;
-    if (!call_os_rng(pa, sizeof(struct pair) * range)) { free(pa); return NULL; };
+    if (!call_rng(pa, sizeof(struct pair) * range)) { free(pa); return NULL; };
     for (i = 0; i < range; i++)pa[i].n = i;
     qsort(pa, range, sizeof(struct pair), paircmp);
     for (i = 0; i < range; i++)arr[i] = pa[i].n;
@@ -96,12 +86,48 @@ static size_t* PRIVATEAPI uniq_rand_arr_v3(const size_t len, const size_t range,
     return arr;
 }
 
+/*
+更高效的方式是“Fisher–Yates 洗牌算法”（也称为Knuth Shuffle），它能在线性时间O(n)内生成唯一随机数组，且只需O(range)空间。
+核心思想：
+1. 先初始化一个顺序数组[0, 1, ..., range-1]。
+2. 从0到len-1，依次将当前位置与后面任意一个位置交换。
+3. 取前len个元素即为结果。
+
+伪代码：
+- 分配一个长度为range的临时数组tmp，填充0~range-1。
+- for i from 0 to len-1:
+    - 生成随机数j in [i, range-1]
+    - 交换tmp[i]和tmp[j]
+    - arr[i] = tmp[i]
+- 释放tmp
+
+我TM怎么没想到呢？诶不对，我想到过，但是觉得不行（
+*/
+static size_t* PRIVATEAPI uniq_rand_arr_v4(const size_t len, const size_t range, size_t* const arr) {
+    if (!arr || !range || !len || len > range) return NULL;
+    size_t* tmp = (size_t*)malloc(sizeof(size_t) * range);
+    if (!tmp) return NULL;
+    for (size_t i = 0; i < range; ++i) tmp[i] = i;
+    for (size_t i = 0; i < len; ++i) {
+        size_t j, r;
+        if (!call_rng(&r, sizeof(r))) { free(tmp); return NULL; }
+        j = i + (r % (range - i));
+        size_t t = tmp[i];
+        tmp[i] = tmp[j];
+        tmp[j] = t;
+        arr[i] = tmp[i];
+    }
+    free(tmp);
+    return arr;
+}
+
+
 static size_t* PRIVATEAPI uniq_rand_arr_v1(const size_t len, const size_t range, size_t* const arr) {
-    if (!arr) return NULL;
+    if (!arr || !range || !len || len > range) return NULL;
     size_t i, b, i2;
     for (i = 0; i < len; i++) {
     GetRandomUnsigned: {
-        if (!call_os_rng(&b, sizeof(b))) return NULL;
+        if (!call_rng(&b, sizeof(b))) return NULL;
         b %= range;
     }
     for (i2 = 0; i2 < i; i2++) {
@@ -120,6 +146,8 @@ size_t* PRIVATEAPI uniq_rand_arr(const size_t len, const size_t range, size_t* c
         return uniq_rand_arr_v2(len, range, arr);
     case 3:
         return uniq_rand_arr_v3(len, range, arr);
+    case 4:
+        return uniq_rand_arr_v4(len, range, arr);
     default:
         uniq_rand_arr_version_flag = default_uniq_rand_arr_version_flag;
         goto start;
@@ -137,7 +165,7 @@ _Bool PRIVATEAPI obtain_cached_ull(unsigned long long* const pull,const size_t s
     static int i;
     if ((!pull)||(sizeofull!=sizeof(unsigned long long)))return 0;
     if ((!i)){
-        if(!call_os_rng(ullcache, sizeof(ullcache)))return 0;
+        if(!call_rng(ullcache, sizeof(ullcache)))return 0;
         else i = ULL_BUF_SIZE;
     }
 

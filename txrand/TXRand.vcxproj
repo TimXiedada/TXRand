@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="arrop.c" />
+    <ClCompile Include="dists.c" />
     <ClCompile Include="randint.c" />
     <ClCompile Include="randbool.c" />
     <ClCompile Include="random.c" />
+    <ClCompile Include="rng.c" />
     <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
@@ -34,7 +36,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{4bb4c0fe-942b-44d2-b40a-cdb07d41e925}</ProjectGuid>
     <RootNamespace>TXRand</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

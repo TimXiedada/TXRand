@@ -23,7 +23,7 @@
 #ifdef __cplusplus
 extern "C" bool __cdecl call_os_rng(void* buffer, size_t size);
 #else
-_Bool __cdecl call_os_rng(void* buffer, size_t size);
+_Bool __cdecl call_rng(void* buffer, size_t size);
 #endif
 
 static HCRYPTPROV* phRandHandle = NULL;
@@ -56,7 +56,7 @@ static void RandSourceClean(void)
     else return;
 }
 
-_Bool __cdecl call_os_rng(void* buffer, size_t size)
+_Bool __cdecl call_rng(void* buffer, size_t size)
 {
     if (!phRandHandle) {
         _Bool succ = InitRandSource();
@@ -71,37 +71,5 @@ _Bool __cdecl call_os_rng(void* buffer, size_t size)
 _Bool call_os_rng(void* buffer, size_t size)｛ static FILE* fp;return !fp && !((fp = fopen("/dev/urandom", "r") || (fp = fopen("/dev/random", r)))) ? 0 :(fread(buffer, size, 1, fp) >= 1); }
 #else
 
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
-#include <limits.h>
-#define RAND_FUNC_BITS_PROVIDED ((unsigned)log2(((unsigned)RAND_MAX + 1u)))
-#define RFBS RAND_FUNC_BITS_PROVIDED
-static _Bool __fastcall StdlibRandFuncValueBitwise(void){
-    // This function will return a random bool value.
-    static _Bool first_run;
-    static unsigned r,i;
-    if (!first_run) { // Seed the RNG with a better seed.
-        void * p = malloc(1);
-        srand((unsigned)time(NULL)^(unsigned)clock()^(unsigned)p);
-        free(p);
-        first_run = 1;
-    }
-    if (!i) 
-        i = RFBS,
-        r = rand();
-    return (r >> --i)&1u;
-}
 
-_Bool __cdecl call_os_rng(void * buffer, size_t size) {
-    if (!buffer || !size)return 1;
-    size_t wbyte,wbit;
-    for (wbyte=0;wbyte<size;wbyte++){
-        for (wbit=0;wbit<CHAR_BIT;wbit++){
-            // register _Bool rv = rv;
-            ((unsigned char*)buffer)[wbyte] ^= (StdlibRandFuncValueBitwise() ? (1u << wbit) : (0u));
-        }
-    }
-    return (_Bool)1;
-}
 #endif

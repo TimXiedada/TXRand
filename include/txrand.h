@@ -23,7 +23,7 @@ extern "C" {
 #endif // TXRANDAPI
     //typedef void*  pvoid;
     // Wrapper to OS random number generator.
-    _Bool __cdecl call_os_rng(void* buffer, size_t size);
+    _Bool __cdecl call_rng(void* buffer, size_t size);
     /*--------------------楚--------------------河--------------------汉--------------------界--------------------*/
     //randbool.c
     _Bool TXRANDAPI randbool_w(const double weight);

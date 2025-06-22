@@ -30,6 +30,12 @@
     <ClCompile Include="utils.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="rng.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="dists.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\txrand.h">

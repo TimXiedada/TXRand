@@ -36,7 +36,7 @@
 */
 
 
-static inline void* PRIVATEAPI mboffset(const void* pstart, size_t offsetb, size_t bs) {
+static inline void* PRIVATEAPI mboffset(const void* pstart, size_t offsetb, size_t bs) { 
     size_t _pdest;
     void* pdest;
     _pdest = (size_t)pstart;
@@ -49,7 +49,7 @@ void*  TXRANDAPI choice(const void* seq, size_t size, size_t count)
 {
     size_t b;
     
-    if (!call_os_rng(&b, sizeof(b))) return NULL;
+    if (!call_rng(&b, sizeof(b))) return NULL;
     b %= count;
     
     return mboffset(seq,b,size);
@@ -111,7 +111,7 @@ void shuffle(void* seq, size_t size, size_t count) {
 
 void* TXRANDAPI fillbuffer(void* buffer, size_t size, size_t count)
 {
-    _Bool succ = call_os_rng(buffer, size * count);
+    _Bool succ = call_rng(buffer, size * count);
     if (!succ) return NULL;
     else return buffer;
 }
